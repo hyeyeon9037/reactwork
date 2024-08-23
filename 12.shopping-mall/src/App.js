@@ -7,6 +7,12 @@ import pList from './data/ProductList';
 import { Outlet, Link, Route, Routes, useNavigate } from 'react-router-dom'; 
 import Detail from './pages/Detail';
 
+/* 
+  * ajax로 서버로부터 데이터를 얻어오기
+    1. 설치하기 : npm i axios
+*/
+
+
 function App() {
   let [clothes, setClothes] = useState(pList);
   
