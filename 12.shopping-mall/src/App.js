@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Container, Nav, Row, Col} from 'react-bootstrap';
+import { Navbar, Container, Nav, Row, Col, Button} from 'react-bootstrap';
 import { useState } from 'react';
 import pList from './data/ProductList';
 import { Outlet, Link, Route, Routes, useNavigate } from 'react-router-dom'; 
 import Detail from './pages/Detail';
+import axios from 'axios';
 
 /* 
   * ajax로 서버로부터 데이터를 얻어오기
@@ -48,6 +49,28 @@ function App() {
             }
           </Row>
       </Container>
+      
+      <Button variant="info"onClick={()=>{
+        axios.get('https://raw.githubusercontent.com/professorjiwon/data/main/data2.json')
+              .then((result)=>{
+                console.log(result);
+                setClothes([...result.data ,...clothes]);
+                
+                // 방법1
+                // let value = [...result.data ,...clothes]
+                // setClothes(value);
+                
+                // 방법2
+               // let value = [...clothes]; //1,2,3,1 ,2 ,3
+                // value.unshift(...result.data);
+                // setClothes(value);
+              })
+              .catch(()=>{
+                console.log('실패');
+              }
+
+              )
+      }}>서버에서 데이터 가져오기</Button>
       </div>} />
 
         <Route path='/detail/:index' element={<Detail clothes={clothes} bg={"green"}/>} />
