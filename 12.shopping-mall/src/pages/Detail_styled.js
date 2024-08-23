@@ -1,21 +1,51 @@
 import {Container,Row, Button, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-/*
-    lifeCycle(생명주기)
-    컴포넌트
-    
-*/
+
+let YellowBtn = styled.button`
+    background : yellow;
+    color : blue;
+    padding : 10px;
+`;
+
+let Box = styled.div`
+    padding : 20px;
+    background : grey;
+`;
+
+let BlueBtn = styled.button`
+    background : blue;
+    color : white;
+    padding : 10px;
+`;
+
 function Detail (props) {
 
-    let {index} = useParams();
+    let Btn = styled.button`
+    background : ${props => props.bg};
+    color : blue;
+    padding : 10px;
+    `;
+
+    // let {index, member} = useParams();
+    // console.log(index);
+    // console.log(member);
+
+    let {index, bg} = useParams();
 
     let findId = props.clothes.find(function(x) {
         return x.id == index;
     })
 
+    console.log(typeof(findId));
+    console.log(findId.id);
+
     return (
         <div>
+            <YellowBtn>노란버튼</YellowBtn>
+            <Box>div</Box>
+            <BlueBtn>블루버튼</BlueBtn>
+            
             <Container>
             <Row>
                 <Col lg={6}>
