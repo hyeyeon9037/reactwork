@@ -16,6 +16,7 @@ import axios from 'axios';
 
 function App() {
   let [clothes, setClothes] = useState(pList);
+  let [page, setPage] = useState(2);
   
   // 페이지의 이동을 도와주는 함수
   let navigate = useNavigate();
@@ -51,11 +52,13 @@ function App() {
       </Container>
       
       <Button variant="info"onClick={()=>{
-        axios.get('https://raw.githubusercontent.com/professorjiwon/data/main/data2.json')
+        axios.get(`https://raw.githubusercontent.com/professorjiwon/data/main/data${page}.json`)
               .then((result)=>{
                 console.log(result);
-                setClothes([...result.data ,...clothes]);
-                
+                setClothes([...clothes, ...result.data]);
+                // clothes 초기값이기때문에 먼저 써줘야함
+                setPage(page+1);
+
                 // 방법1
                 // let value = [...result.data ,...clothes]
                 // setClothes(value);
@@ -67,11 +70,20 @@ function App() {
               })
               .catch(()=>{
                 console.log('실패');
+                alert('더 이상 상품이 없습니다.')
               }
 
               )
       }}>서버에서 데이터 가져오기</Button>
       </div>} />
+      {/* 
+        * 서버로 보낼때
+        axiox.post('url', 데이터)
+        ex) axiox.post('url', {name:'kim'})
+
+        * 동시에 요청을 여러 개 할 때
+          Promise.all( [axiox.get('url'), axios.get('url'), axios.post('url', 데이터)] )
+      */}
 
         <Route path='/detail/:index' element={<Detail clothes={clothes} bg={"green"}/>} />
         <Route path='*' element={<div>없는 페이지입니다.</div>}/>
@@ -87,6 +99,7 @@ function PListCol(props) {
           <Col lg={4}>
           <img src={`${process.env.PUBLIC_URL}/img/imagecopy${props.i}.png`} /> 
           <h4>{props.clothes.title}</h4>
+          <p>{props.clothes.content}</p>
           <p>{props.clothes.price}</p>
         </Col>
       </>
