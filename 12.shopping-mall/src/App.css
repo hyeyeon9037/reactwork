@@ -20,8 +20,17 @@ img {
 .end {
   opacity: 1;
   transition: opacity 1s; 
-  /*
-  opacity  .. 불투명? 뭐지 
-  transition 은 투명도를말함.,.?
-  */
 }
+
+/* 크기 조절 애니메이션 
+.start {
+  transform: scale(0);
+}
+
+.end {
+  transform: scale(1);
+  transition: all;
+}
+ */
+
+ 
