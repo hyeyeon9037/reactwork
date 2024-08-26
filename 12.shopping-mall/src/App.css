@@ -12,3 +12,16 @@
 img {
   height: 400px;
 }
+
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: opacity 1s; 
+  /*
+  opacity  .. 불투명? 뭐지 
+  transition 은 투명도를말함.,.?
+  */
+}

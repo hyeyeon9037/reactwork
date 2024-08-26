@@ -9,10 +9,12 @@ function App() {
   const [count, setCount] = useState(0);
   const [text, setText] = useState("");
 
+  // 방법1 -> function으로 쓰기
   function onChangeInput(e) {
     setText(e.target.value);  
   }
 
+  // 방법2 -> const로 쓰기
   const onClickBtn = (value) => {
     setCount(count + value);
   }

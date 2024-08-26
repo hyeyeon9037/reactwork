@@ -8,11 +8,17 @@ import { Outlet, Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Detail from './pages/Detail';
 import axios from 'axios';
 
+/* 
+  * ajax로 서버로부터 데이터를 얻어오기
+    1. 설치하기 : npm i axios
+*/
+
 
 function App() {
   let [clothes, setClothes] = useState(pList);
   let [page, setPage] = useState(2);
-
+  
+  // 페이지의 이동을 도와주는 함수
   let navigate = useNavigate();
 
   return (
@@ -50,8 +56,17 @@ function App() {
               .then((result)=>{
                 console.log(result);
                 setClothes([...clothes, ...result.data]);
+                // clothes 초기값이기때문에 먼저 써줘야함
                 setPage(page+1);
 
+                // 방법1
+                // let value = [...result.data ,...clothes]
+                // setClothes(value);
+                
+                // 방법2
+               // let value = [...clothes]; //1,2,3,1 ,2 ,3
+                // value.unshift(...result.data);
+                // setClothes(value);
               })
               .catch(()=>{
                 console.log('실패');
@@ -61,6 +76,16 @@ function App() {
               )
       }}>서버에서 데이터 가져오기</Button>
       </div>} />
+      {/* 
+        * 서버로 보낼때
+        axiox.post('url', 데이터)
+        ex) axiox.post('url', {name:'kim'})
+
+        
+
+        * 동시에 요청을 여러 개 할 때
+          Promise.all( [axiox.get('url'), axios.get('url'), axios.post('url', 데이터)] )
+      */}
 
         <Route path='/detail/:index' element={<Detail clothes={clothes} bg={"green"}/>} />
         <Route path='*' element={<div>없는 페이지입니다.</div>}/>

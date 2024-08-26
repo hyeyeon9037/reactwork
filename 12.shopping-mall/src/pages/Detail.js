@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
-import {Container,Row, Button, Col } from "react-bootstrap";
+import { Nav, Container,Row, Button, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import styled from 'styled-components';
+import './../App.css'
+// './..'   . 은 지금내가있는 폴더에서 
+//          /.. -> 상위폴더로
 
 /*
-   - useEffect(() => {실행할 코드}, [변경되는 state])
-     변경되는 state가 변경되어 재렌더링 될 때만 호출이 됨
-     이외의 재렌더링시에는 호출되지 않음
+    탭 만들기
+*/
 
-    - useEffect(() => {실행할 코드},[])
-      최초 mount될 때 한번만 사용
+/*
+    애니메이션 만들기
+    1) 애니메이션 동작 전 스타일을 담을 className 설정
+    2) 애니메이션 동작 후 스타일을 담을 className 설정
+    3) transition으로 ??초동안 변하게 
+    4) 원할 때 동작 전 className을 동작 후 className으로 변경
 
-    - useEffect(() => { 변수.. return(리턴할 코드)}, [])
-      return문법 : clear up function이라 한다
-      useEffect가 실행되기 전에 return을 먼저 실행
-      return은 mount시 실행 안되고, unmount시에만 실행됨
-
-      * 정리 
-      useEffect(() => {}) : 재렌더링 될때마다 실행
-      useEffect(() => {}, []) : mount시 한번만 실행
-      useEffect(() => {}, [???]) : ???이 재렌더링 될때마다 실행
-      useEffect(() => {.. return( unmout시 한 번실행)}
-      
 */
 
 function Detail (props) {
@@ -31,18 +25,18 @@ function Detail (props) {
         return x.id == index;
       })
     
-    //   let [alert, setAlert] = useState(true);    
-    //   let [count, setCount] = useState(0);
+      let [alert, setAlert] = useState(true);    
+      let [count, setCount] = useState(0);
 
-    //   useEffect(() => {
-    //    let timer = setTimeout(() => {setAlert(false)}, 3000)
-    //     return () =>{
-    //         // 기존 타이머 삭제
-    //         clearTimeout(timer);
-    //     }
+      useEffect(() => {
+       let timer = setTimeout(() => {setAlert(false)}, 1000)
+        return () =>{
+            // 기존 타이머 삭제
+            clearTimeout(timer);
+        }
         
-    //   },[alert])
-    // alert창 띄우기
+      },[alert])
+    // alert(은 재렌더링이 됨) 창 띄우기
 
     let [num, setNum] = useState('');
     useEffect(() => {
@@ -51,14 +45,15 @@ function Detail (props) {
         }
     }, [num])
 
+
+    let [tab, setTab] = useState(0);
+
+
     return (
         <div>
             <input onChange={(e) => {setNum(e.target.value)}} />
-            {/* {alert ? <h2>2초 이내 구매시 할인</h2> : null}
-            <button onClick={() => {setAlert(true)}}>alert 버튼</button>
+            {alert ? <h2>2초 이내 구매시 할인</h2> : null}
             
-            {count}
-            <button onClick={() => {setCount(count+1)}}>count 버튼</button> */}
             <Container>
             <Row>
                 <Col lg={6}>
@@ -71,9 +66,63 @@ function Detail (props) {
                     <Button variant="outline-secondary">주문하기</Button>
                 </Col>
             </Row>
-            </Container>    
+            </Container>
+
+             <Nav variant="tabs" defaultActiveKey="link0">
+                <Nav.Item>
+                    <Nav.Link onClick={() => {setTab(0)}} eventKey="link0" >Button 0</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={() => {setTab(1)}} eventKey="link1">Button 1</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={() => {setTab(2)}} eventKey="link2">Button 2</Nav.Link>
+                </Nav.Item>
+            </Nav>
+            
+            {/* state가 0이면 내용0을 보여주기 */}
+
+            {/* 1. 삼항연산자 사용 */}
+            {/* { tab == 0 ? <div>내용 0</div> : tab ==1 ? <div> 내용1 </div> : <div> 내용2 </div>} */}
+
+            {/* 2. component 사용 */}
+            <TabContent tab={tab} /> 
+        </div>
+
+       
+
+    )
+}
+    // 2. component 사용 (if문으로)
+    // function TabContent({tab}) {
+    //     if(tab == 0)
+    //         return <div> 내용 0 </div>
+    //     else if(tab == 1)
+    //         return <div> 내용 1 </div>
+    //     else
+    //         return <div> 내용 2 </div>    
+
+    // }
+
+    // 배열 리턴
+
+    function TabContent({tab}) {
+        let[fade, setFade] = useState('')
+
+        useEffect(() => {
+            setTimeout(() => {setFade('end')},100)  //0.1초 뒤 end
+            return () => {
+                setFade('start')
+            }
+        }, [tab])
+
+        return(
+            // className= {`start ${fade}`} 가능 
+        <div className={fade}>
+             { [<div> 내용 0 </div>, <div> 내용 1 </div>, <div> 내용 2 </div> ][tab] }
         </div>
     )
+   
 }
 
 export default Detail;

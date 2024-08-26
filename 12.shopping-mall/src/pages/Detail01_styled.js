@@ -21,11 +21,13 @@ let BlueBtn = styled.button`
 
 function Detail (props) {
 
+    
     let Btn = styled.button`
     background : ${props => props.bg};
     color : blue;
     padding : 10px;
     `;
+    
 
     // let {index, member} = useParams();
     // console.log(index);
@@ -45,6 +47,8 @@ function Detail (props) {
             <YellowBtn>노란버튼</YellowBtn>
             <Box>div</Box>
             <BlueBtn>블루버튼</BlueBtn>
+
+            
             
             <Container>
             <Row>
