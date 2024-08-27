@@ -9,10 +9,25 @@ let stock = createSlice({
 let jacket = createSlice({
     name: 'jacket',
     initialState : [   
-        {id:0,title:"ddd",count:1},
-        {id:1,title:"ㅋㅋㅋ",count:2}
-    ]
+        {id:0,title:"ddd",count:2},
+        {id:2,title:"ㅋㅋㅋ",count:1}
+    ],
+
+    reducers : {
+        addCount(s, action) {
+            let i = s.findIndex(ind => ind.id == action.payload) // payload도 가져올때 반드시 써야함
+            // (ind) => { return ind.id == action.payload} 중괄호를 쓰면 이렇게 써야함 
+            s[i].count++
+        },
+        addItem(state, action) {
+            // state.push({id:1, title: '바지', count:1 })
+            state.push(action.payload)
+        }
+    }
+
 })
+
+export let {addCount, addItem} = jacket.actions
 
 export default configureStore({
     reducer : {

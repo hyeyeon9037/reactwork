@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { Nav, Container,Row, Button, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import './../App.css'
-
+import { useDispatch } from "react-redux";
+import { addItem } from '../store/store';
 
 
 function Detail (props) {
+
+    let dispatch = useDispatch();
 
       let {index} = useParams();
       let findId = props.clothes.find(function(x) {
@@ -54,8 +57,10 @@ function Detail (props) {
                 <Col lg={6}>
                     <h4>{findId.title}</h4>
                     <p>{findId.content}</p>
-                    <p>{findId.price}</p>
-                    <Button variant="outline-secondary">주문하기</Button>
+                    <p>{findId.price}원</p>
+                    <Button variant="info" onClick={() => {
+                        dispatch(addItem({id:findId.id, title: findId.title, count:1}))
+                    }}>주문하기</Button>
                 </Col>
             </Row>
             </Container>

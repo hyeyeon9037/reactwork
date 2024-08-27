@@ -83,7 +83,10 @@ function PListCol(props) {
     return (
       <>
           <Col lg={4}>
+          <Link to ={`/detail/${props.i}`}>
           <img src={`${process.env.PUBLIC_URL}/img/imagecopy${props.i}.png`} /> 
+          </Link>
+      
           <h4>{props.clothes.title}</h4>
           <p>{props.clothes.content}</p>
           <p>{props.clothes.price}</p>

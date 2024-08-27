@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
     // import { changeName, increase } from '../store/store';
 
     // userSlice로 분할 후 import
-    import { changeName, increase } from '../store/userSlice';
+     import { changeName, increase } from '../store/userSlice';
+    import { addCount } from '../store/store';
 
 function Cart() {   
 
@@ -45,8 +46,9 @@ function Cart() {
                             <td>{c.count}</td>
                             <td>
                                 <Button variant="outline-secondary" onClick={() => {
-                                    dispatch(increase(1))
-                                    //           ↑ 1씩 증가시킨다는 말
+                                    // dispatch(increase(3))
+                                    //           ↑ 3씩 증가시킨다는 말
+                                    dispatch(addCount(c.id))
                                 }} >
                                      + 
                                 </Button>
